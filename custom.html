@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<title>Custom mesquite furniture | Mesquite Valley Woodcrafts</title>
+<meta name="description" content="Design a custom mesquite and wrought iron table. Choose your wood, design, and base, and we'll build it to last for generations.">
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="index.html">Mesquite Valley Woodcrafts<small>Mesquite and wrought iron, built to last</small></a><nav aria-label="Main"><a href="custom.html" aria-current="page">Custom furniture</a><a href="lumber.html">Buy lumber</a><a href="tel:2543078624">254-307-8624</a></nav></div></header>
+
+<main>
+<section>
+  <div class="wrap">
+    <h1>Design your table</h1>
+    <p>Choose a wood, a design, and a base. The picture updates as you go. When you're happy with it, send it to us and we'll call you to talk through size, finish, and price.</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap builder">
+    <form id="opts" onsubmit="return false"></form>
+
+    <div class="preview">
+      <svg id="art" viewBox="0 0 400 240" role="img" aria-label="Table preview"></svg>
+      <dl id="sum" aria-live="polite"></dl>
+      <label class="f">Your name
+        <input id="who" autocomplete="name">
+      </label>
+      <label class="f">Phone or email, so we can reach you
+        <input id="reach" autocomplete="tel">
+      </label>
+      <a class="btn" id="send" href="#">Send this design to us</a>
+      <p style="margin-top:1rem;font-size:.9rem">This opens an email with your choices filled in. Prefer to talk? Call <a href="tel:2543078624">254-307-8624</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap">
+    <h2>Built for the home you'll stay in</h2>
+    <p>Each table is made by hand in our shop from solid wood, and our iron bases are forged by an award-winning blacksmith. These are pieces meant to be used every day and passed down.</p>
+    <p>Not sure what to choose? Visit our showroom to see the woods and finishes in person. Call ahead and we'll set aside time for you.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How a custom order works</h2>
+    <ol style="max-width:62ch;padding-left:1.2em">
+      <li><b>Send us your design.</b> Use the tool above, or just call.</li>
+      <li><b>We talk it through.</b> We'll confirm size, finish, and price, and answer any questions.</li>
+      <li><b>We build it.</b> We'll keep you updated and let you know when it's ready.</li>
+      <li><b>It comes home.</b> Ask us about pickup and delivery.</li>
+    </ol>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><p><b>Mesquite Valley Woodcrafts</b></p><p>Call <a href="tel:2543078624">254-307-8624</a> or email <a href="mailto:mesquitevalley@yahoo.com">mesquitevalley@yahoo.com</a></p><p>&copy; 2026 Mesquite Valley Woodcrafts</p></div></footer>
+
+<script>
+// Options for the builder. Edit names and descriptions here.
+const OPTIONS = {
+  wood: [
+    ["mesquite", "Mesquite", "Dense and rich red-brown. Our signature wood."],
+    ["pecan", "Pecan", "Lighter tan with darker streaks. Warm and strong."],
+    ["walnut", "Black walnut", "Deep chocolate brown, smooth and formal."]
+  ],
+  design: [
+    ["live", "Live edge", "Keeps the tree's natural, flowing edge."],
+    ["plank", "Classic plank", "Straight, clean lines with joined boards."],
+    ["glass", "Glass inset", "A wood border around a glass center, like our signature table."]
+  ],
+  base: [
+    ["iron", "Wrought iron", "Hand-forged by our blacksmith, with copper accents."],
+    ["trestle", "Wood trestle", "Solid wood legs joined by a heavy rail."],
+    ["pedestal", "Iron pedestal", "One strong center column with a wide foot."]
+  ]
+};
+const TITLES = { wood: "Choose your wood", design: "Choose your design", base: "Choose your base" };
+const LABELS = { wood: "Wood", design: "Design", base: "Base" };
+const WOOD_COLORS = {
+  mesquite: ["#6a3a22", "#3f200f"],
+  pecan: ["#a77a50", "#6f4c2b"],
+  walnut: ["#4a3426", "#2a1b11"]
+};
+const state = { wood: "mesquite", design: "live", base: "iron" };
+
+const opts = document.getElementById("opts");
+const art = document.getElementById("art");
+const sum = document.getElementById("sum");
+const who = document.getElementById("who");
+const reach = document.getElementById("reach");
+const send = document.getElementById("send");
+
+opts.innerHTML = Object.keys(OPTIONS).map(key =>
+  `<fieldset><legend>${TITLES[key]}</legend><div class="opts">` +
+  OPTIONS[key].map(([value, name, desc]) =>
+    `<label class="opt"><input type="radio" name="${key}" value="${value}"${state[key] === value ? " checked" : ""}><b>${name}</b><span>${desc}</span></label>`
+  ).join("") +
+  `</div></fieldset>`
+).join("");
+
+const nameOf = (key, value) => OPTIONS[key].find(o => o[0] === value)[1];
+
+function draw() {
+  const [top, dark] = WOOD_COLORS[state.wood];
+  const iron = "#1d1a17", copper = "#c98a54";
+  let base = "", surface = "";
+
+  if (state.base === "iron") {
+    base = `<path d="M82 106L90 218M318 106L310 218M86 190H314" stroke="${iron}" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <circle cx="87" cy="190" r="5" fill="${copper}"/><circle cx="313" cy="190" r="5" fill="${copper}"/>
+      <circle cx="84" cy="130" r="4" fill="${copper}"/><circle cx="316" cy="130" r="4" fill="${copper}"/>`;
+  } else if (state.base === "trestle") {
+    base = `<rect x="70" y="106" width="28" height="112" fill="${dark}"/><rect x="302" y="106" width="28" height="112" fill="${dark}"/>
+      <rect x="98" y="158" width="204" height="14" fill="${top}" stroke="${dark}"/>`;
+  } else {
+    base = `<path d="M186 106H214L212 200H188Z" fill="${iron}"/><rect x="186" y="146" width="28" height="8" fill="${copper}"/>
+      <path d="M110 218Q200 192 290 218Z" fill="${iron}"/>`;
+  }
+
+  if (state.design === "live") {
+    surface = `<path d="M40 88Q70 76 110 85T190 82T270 87T360 80V106H40Z" fill="${top}" stroke="${dark}"/>
+      <path d="M60 96H160M200 94H330" stroke="${dark}" opacity=".45"/>`;
+  } else if (state.design === "plank") {
+    surface = `<rect x="40" y="80" width="320" height="26" fill="${top}" stroke="${dark}"/>
+      <path d="M147 80V106M253 80V106" stroke="${dark}"/>`;
+  } else {
+    surface = `<rect x="40" y="80" width="320" height="26" fill="${top}" stroke="${dark}"/>
+      <rect x="74" y="85" width="252" height="16" fill="#cfe3e6" stroke="${dark}" opacity=".9"/>
+      <path d="M90 98L130 88M160 98L200 88" stroke="#fff" opacity=".7"/>`;
+  }
+
+  art.innerHTML = `<ellipse cx="200" cy="222" rx="150" ry="7" fill="#000" opacity=".15"/>` + base + surface;
+  art.setAttribute("aria-label",
+    `${nameOf("wood", state.wood)} table with a ${nameOf("design", state.design).toLowerCase()} top and a ${nameOf("base", state.base).toLowerCase()} base`);
+
+  sum.innerHTML = Object.keys(state).map(k => `<dt>${LABELS[k]}</dt><dd>${nameOf(k, state[k])}</dd>`).join("");
+
+  const body = `Hello, I'd like to talk about a custom table.\n\n` +
+    `Wood: ${nameOf("wood", state.wood)}\nDesign: ${nameOf("design", state.design)}\nBase: ${nameOf("base", state.base)}\n\n` +
+    `Name: ${who.value}\nPhone or email: ${reach.value}`;
+  send.href = "mailto:mesquitevalley@yahoo.com?subject=" + encodeURIComponent("Custom table design") +
+    "&body=" + encodeURIComponent(body);
+}
+
+opts.addEventListener("change", e => { state[e.target.name] = e.target.value; draw(); });
+who.addEventListener("input", draw);
+reach.addEventListener("input", draw);
+draw();
+</script>
+</body>
+</html>
