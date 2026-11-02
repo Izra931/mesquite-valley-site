@@ -1,25 +1,31 @@
-:root{--iron:#231f1c;--mesq:#4b2a1a;--copper:#9a5a2a;--glow:#d39a62;--stone:#f1efea;--sand:#e5ded1;--line:#d6d0c5;--ink:#2b2521}
+:root{--max:62rem;--gut:max(5vw,16px);--iron:#231f1c;--mesq:#4b2a1a;--copper:#9a5a2a;--glow:#d39a62;--stone:#f1efea;--sand:#e5ded1;--line:#d6d0c5;--ink:#2b2521}
 *{box-sizing:border-box}
-html{font-size:112.5%}
+/* text grows gently with the screen: 17px on phones, about 18px on laptops, up to 24px on big monitors */
+html{font-size:clamp(17px,.45vw + 12px,24px);-webkit-text-size-adjust:100%}
 body{margin:0;font:1rem/1.65 "Work Sans",system-ui,sans-serif;color:var(--ink);background:var(--stone)}
 h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.15;margin:0 0 .5em;color:var(--iron)}
-h1{font-size:clamp(2.2rem,5vw,3.6rem)}h2{font-size:clamp(1.6rem,3vw,2.2rem)}h3{font-size:1.2rem}
+h1{font-size:clamp(2.1rem,4vw,4rem)}h2{font-size:clamp(1.6rem,3vw,2.2rem)}h3{font-size:1.2rem}
 p{margin:0 0 1em;max-width:62ch}
 a{color:var(--copper)}
 :focus-visible{outline:3px solid var(--copper);outline-offset:3px}
-.wrap{max-width:1100px;margin:0 auto;padding:0 5vw}
+.wrap{width:min(100% - 2*var(--gut),var(--max));margin:0 auto}
+img,video,svg{max-width:100%}
 header{border-bottom:1px solid var(--line)}
 header .wrap{display:flex;flex-wrap:wrap;gap:.5rem 2rem;align-items:center;justify-content:space-between;padding-top:1rem;padding-bottom:1rem}
 .brand{font:600 1.25rem Fraunces,Georgia,serif;color:var(--iron);text-decoration:none}
 .brand small{display:block;font:400 .75rem "Work Sans",sans-serif;color:#6b625a}
-nav a{margin-left:1.5rem;color:var(--ink);text-decoration:none;padding:.3rem 0;border-bottom:2px solid transparent}
+nav{display:flex;flex-wrap:wrap;gap:.2rem 1.5rem}
+nav a{white-space:nowrap;color:var(--ink);text-decoration:none;padding:.3rem 0;border-bottom:2px solid transparent}
 nav a:hover,nav a[aria-current]{border-color:var(--copper)}
 .btn{display:inline-block;padding:.8em 1.6em;background:var(--copper);color:#fff;font-weight:600;text-decoration:none;border:0;border-radius:3px;cursor:pointer;font-size:1rem}
 .btn:hover{background:#7f4720}
 .btn.alt{background:transparent;color:inherit;border:2px solid currentColor}
 section{padding:4rem 0}
-.split{display:grid;grid-template-columns:1fr 1fr;min-height:68vh}
-.split>div{padding:4rem 5vw;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.split{display:grid;grid-template-columns:1fr 1fr;min-height:clamp(28rem,70vh,52rem)}
+.split>div{padding:4rem;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+/* line the panel text up with the centered column used by the header and other sections */
+.split>div:first-child{padding-left:max(var(--gut),calc(100% - var(--max)/2))}
+.split>div:last-child{padding-right:max(var(--gut),calc(100% - var(--max)/2))}
 .home{background:var(--sand)}
 .shop{background:var(--iron);color:#e9e4dc}
 .shop h2,.shop h1{color:#fff}.shop .btn{background:var(--glow);color:var(--iron)}.shop .btn:hover{background:#e6b17e}
@@ -70,7 +76,7 @@ label.f{display:block;font-weight:600;margin-bottom:1rem}
 .dark .f{color:#fff}
 .dark .btn{background:var(--glow);color:var(--iron)}.dark .btn:hover{background:#e6b17e}
 .form-msg{min-height:1.6em;font-weight:600;color:#fff}
-dialog{border:0;padding:0;background:transparent;max-width:min(1100px,94vw)}
+dialog{border:0;padding:0;background:transparent;max-width:min(var(--max),94vw)}
 dialog::backdrop{background:rgba(20,16,14,.85)}
 dialog img{display:block;max-width:100%;max-height:82vh;margin:0 auto 1rem}
 dialog .btn{display:block;margin:0 auto}
@@ -78,5 +84,5 @@ dialog .btn{display:block;margin:0 auto}
 .see-designs .wrap{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between}
 .see-designs p{margin:0}
 .btn-row{display:flex;flex-wrap:wrap;gap:.8rem}
-@media(max-width:800px){.split,.builder,.design,.request-wrap{grid-template-columns:1fr;gap:1.5rem}.design:nth-child(even) .photos{order:0}.preview{position:static;order:-1}nav a{margin:0 1rem 0 0}}
+@media(max-width:800px){.split{grid-template-columns:1fr;min-height:0}.split>div,.split>div:first-child,.split>div:last-child{padding:3.5rem var(--gut)}.builder,.design,.request-wrap{grid-template-columns:1fr;gap:1.5rem}.design:nth-child(even) .photos{order:0}.preview{position:static;order:-1}nav{gap:.2rem 1.1rem}}
 @media(prefers-reduced-motion:no-preference){.opt{transition:border-color .15s,background .15s}}
