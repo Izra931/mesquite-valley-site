@@ -45,5 +45,29 @@ legend{font:600 1.3rem Fraunces,Georgia,serif;margin-bottom:.8rem;color:var(--ir
 .opt:has(input:focus-visible){outline:3px solid var(--copper);outline-offset:2px}
 label.f{display:block;font-weight:600;margin-bottom:1rem}
 .f input,.f select,.f textarea{display:block;width:100%;padding:.6em;font:inherit;border:1px solid #9d958a;margin-top:.3rem;background:#fff}
-@media(max-width:800px){.split,.builder{grid-template-columns:1fr}.preview{position:static;order:-1}nav a{margin:0 1rem 0 0}}
+/* designs page */
+.design{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;align-items:center;padding:3rem 0;border-top:1px solid var(--line)}
+.design:first-child{border-top:0;padding-top:0}
+.design:nth-child(even) .photos{order:2}
+.photos{display:grid;gap:.6rem}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.6rem}
+.photo{display:block;padding:0;border:0;background:var(--sand);cursor:zoom-in;aspect-ratio:4/3;overflow:hidden;width:100%}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo.missing{cursor:default;background:repeating-linear-gradient(100deg,#c9a37f 0 14px,#b88d66 14px 22px,#c39a74 22px 40px)}
+.photo.missing img{visibility:hidden}
+.ask{color:#5d554d;font-size:.95rem}
+.request-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.request-wrap a{color:var(--glow)}
+.dark .f{color:#fff}
+.dark .btn{background:var(--glow);color:var(--iron)}.dark .btn:hover{background:#e6b17e}
+.form-msg{min-height:1.6em;font-weight:600;color:#fff}
+dialog{border:0;padding:0;background:transparent;max-width:min(1100px,94vw)}
+dialog::backdrop{background:rgba(20,16,14,.85)}
+dialog img{display:block;max-width:100%;max-height:82vh;margin:0 auto 1rem}
+dialog .btn{display:block;margin:0 auto}
+.see-designs{background:var(--sand)}
+.see-designs .wrap{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between}
+.see-designs p{margin:0}
+.btn-row{display:flex;flex-wrap:wrap;gap:.8rem}
+@media(max-width:800px){.split,.builder,.design,.request-wrap{grid-template-columns:1fr;gap:1.5rem}.design:nth-child(even) .photos{order:0}.preview{position:static;order:-1}nav a{margin:0 1rem 0 0}}
 @media(prefers-reduced-motion:no-preference){.opt{transition:border-color .15s,background .15s}}
