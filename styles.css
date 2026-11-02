@@ -45,6 +45,15 @@ legend{font:600 1.3rem Fraunces,Georgia,serif;margin-bottom:.8rem;color:var(--ir
 .opt:has(input:focus-visible){outline:3px solid var(--copper);outline-offset:2px}
 label.f{display:block;font-weight:600;margin-bottom:1rem}
 .f input,.f select,.f textarea{display:block;width:100%;padding:.6em;font:inherit;border:1px solid #9d958a;margin-top:.3rem;background:#fff}
+/* home video backdrop */
+.home.has-video{position:relative;overflow:hidden;background:var(--iron);color:#fff}
+.bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.home.has-video::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(25,18,14,.35),rgba(25,18,14,.72))}
+.home.has-video>*:not(.bg-video){position:relative;z-index:2}
+.home.has-video h1{color:#fff}
+.home.has-video .btn.alt{color:#fff;border-color:#fff}
+.home.has-video .btn.alt:hover{background:rgba(255,255,255,.15)}
+.video-toggle{position:absolute!important;right:1rem;bottom:1rem;background:rgba(0,0,0,.5);color:#fff;border:1px solid rgba(255,255,255,.6);border-radius:3px;padding:.35em .9em;font:inherit;font-size:.85rem;cursor:pointer}
 /* designs page */
 .design{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;align-items:center;padding:3rem 0;border-top:1px solid var(--line)}
 .design:first-child{border-top:0;padding-top:0}
