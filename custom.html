@@ -8,35 +8,61 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <title>Custom mesquite furniture | Mesquite Valley Woodcrafts</title>
-<meta name="description" content="Design a custom mesquite and wrought iron table. Choose your wood, design, and base, and we'll build it to last for generations.">
+<meta name="description" content="Design a custom mesquite table. Choose your wood, design, and base, and we'll build it to last for generations.">
 </head>
 <body>
-<header><div class="wrap"><a class="brand" href="index.html">Mesquite Valley Woodcrafts<small>Mesquite and wrought iron, built to last</small></a><nav aria-label="Main"><a href="custom.html" aria-current="page">Custom furniture</a><a href="designs.html">Our designs</a><a href="lumber.html">Buy lumber</a><a href="tel:2543078624">254-307-8624</a></nav></div></header>
+<header><div class="wrap"><a class="brand" href="index.html">Mesquite Valley Woodcrafts<small>Mesquite and steel, built to last</small></a><nav aria-label="Main"><a href="index.html">Home</a><a href="custom.html" aria-current="page">Custom furniture</a><a href="designs.html">Our designs</a><a href="lumber.html">Buy lumber</a><a href="tel:2543078624">254-307-8624</a></nav></div></header>
 
 <main>
 <section>
   <div class="wrap">
     <h1>Design your table</h1>
-    <p>Choose a wood, a design, and a base. The picture updates as you go. When you're happy with it, send it to us and we'll call you to talk through size, finish, and price.</p>
+    <p>Choose a wood, a design, and a base. The picture updates as you go. When you're happy with it, send it to us and we'll get back to you to talk through size, finish, and price.</p>
   </div>
 </section>
 
 <section style="padding-top:0">
   <div class="wrap builder">
-    <form id="opts" onsubmit="return false"></form>
+    <div>
+      <div class="choices" id="choices"></div>
+      <a class="btn phone-only" href="#send">Send this design to us</a>
+    </div>
 
     <div class="preview">
       <svg id="art" viewBox="0 0 400 240" role="img" aria-label="Table preview"></svg>
       <dl id="sum" aria-live="polite"></dl>
-      <label class="f">Your name
-        <input id="who" autocomplete="name">
-      </label>
-      <label class="f">Phone or email, so we can reach you
-        <input id="reach" autocomplete="tel">
-      </label>
-      <a class="btn" id="send" href="#">Send this design to us</a>
-      <p style="margin-top:1rem;font-size:.9rem">This opens an email with your choices filled in. Prefer to talk? Call <a href="tel:2543078624">254-307-8624</a>.</p>
+      <a class="btn wide-only" href="#send">Send this design to us</a>
     </div>
+  </div>
+</section>
+
+<section class="dark" id="send">
+  <div class="wrap request-wrap">
+    <div>
+      <h2>Send us your design</h2>
+      <p>Tell us how to reach you and we'll get back to you to talk about size, finish and price. There's no cost to ask.</p>
+      <p class="your-design">Your table: <b id="sum-line"></b>. <a href="#choices">Change it</a></p>
+      <p>Rather talk now? Call <a href="tel:2543078624">254-307-8624</a>.</p>
+    </div>
+    <form class="send-form" id="req" novalidate data-subject="Custom table design">
+      <input type="hidden" name="wood" data-label="Wood">
+      <input type="hidden" name="design" data-label="Design">
+      <input type="hidden" name="base" data-label="Base">
+      <label class="f">Your name
+        <input name="name" autocomplete="name" required>
+      </label>
+      <label class="f">Phone
+        <input name="phone" type="tel" autocomplete="tel">
+      </label>
+      <label class="f">Email
+        <input name="email" type="email" autocomplete="email">
+      </label>
+      <label class="f">Size, room or anything else we should know
+        <textarea name="details" rows="4" placeholder="Example: about 5 feet long, for a living room with a stone fireplace"></textarea>
+      </label>
+      <p class="form-msg" role="status" aria-live="polite"></p>
+      <button class="btn" type="submit">Send my design</button>
+    </form>
   </div>
 </section>
 
@@ -73,6 +99,7 @@
 
 <footer><div class="wrap"><p><b>Mesquite Valley Woodcrafts</b></p><p>Call <a href="tel:2543078624">254-307-8624</a> or email <a href="mailto:mesquitevalley@yahoo.com">mesquitevalley@yahoo.com</a></p><p>&copy; 2026 Mesquite Valley Woodcrafts</p></div></footer>
 
+<script src="forms.js"></script>
 <script>
 // Options for the builder. Edit names and descriptions here.
 const OPTIONS = {
@@ -92,7 +119,6 @@ const OPTIONS = {
     ["pedestal", "Iron pedestal", "One strong center column with a wide foot."]
   ]
 };
-const TITLES = { wood: "Choose your wood", design: "Choose your design", base: "Choose your base" };
 const LABELS = { wood: "Wood", design: "Design", base: "Base" };
 const WOOD_COLORS = {
   mesquite: ["#6a3a22", "#3f200f"],
@@ -101,22 +127,25 @@ const WOOD_COLORS = {
 };
 const state = { wood: "mesquite", design: "live", base: "iron" };
 
-const opts = document.getElementById("opts");
+const choices = document.getElementById("choices");
 const art = document.getElementById("art");
 const sum = document.getElementById("sum");
-const who = document.getElementById("who");
-const reach = document.getElementById("reach");
-const send = document.getElementById("send");
+const sumLine = document.getElementById("sum-line");
+const form = document.getElementById("req");
 
-opts.innerHTML = Object.keys(OPTIONS).map(key =>
-  `<fieldset><legend>${TITLES[key]}</legend><div class="opts">` +
-  OPTIONS[key].map(([value, name, desc]) =>
-    `<label class="opt"><input type="radio" name="${key}" value="${value}"${state[key] === value ? " checked" : ""}><b>${name}</b><span>${desc}</span></label>`
-  ).join("") +
-  `</div></fieldset>`
+// One dropdown per choice, with a short description under it.
+choices.innerHTML = Object.keys(OPTIONS).map(key =>
+  `<div class="pick">
+     <label class="pick-label" for="pick-${key}">${LABELS[key]}</label>
+     <select class="pick-select" id="pick-${key}" name="${key}" aria-describedby="desc-${key}">` +
+    OPTIONS[key].map(([value, name]) => `<option value="${value}"${state[key] === value ? " selected" : ""}>${name}</option>`).join("") +
+  `  </select>
+     <p class="pick-desc" id="desc-${key}"></p>
+   </div>`
 ).join("");
 
-const nameOf = (key, value) => OPTIONS[key].find(o => o[0] === value)[1];
+const option = (key, value) => OPTIONS[key].find(o => o[0] === value);
+const nameOf = (key, value) => option(key, value)[1];
 
 function draw() {
   const [top, dark] = WOOD_COLORS[state.wood];
@@ -148,21 +177,19 @@ function draw() {
   }
 
   art.innerHTML = `<ellipse cx="200" cy="222" rx="150" ry="7" fill="#000" opacity=".15"/>` + base + surface;
-  art.setAttribute("aria-label",
-    `${nameOf("wood", state.wood)} table with a ${nameOf("design", state.design).toLowerCase()} top and a ${nameOf("base", state.base).toLowerCase()} base`);
+  const words = `${nameOf("wood", state.wood)} table with a ${nameOf("design", state.design).toLowerCase()} top and a ${nameOf("base", state.base).toLowerCase()} base`;
+  art.setAttribute("aria-label", words);
 
   sum.innerHTML = Object.keys(state).map(k => `<dt>${LABELS[k]}</dt><dd>${nameOf(k, state[k])}</dd>`).join("");
-
-  const body = `Hello, I'd like to talk about a custom table.\n\n` +
-    `Wood: ${nameOf("wood", state.wood)}\nDesign: ${nameOf("design", state.design)}\nBase: ${nameOf("base", state.base)}\n\n` +
-    `Name: ${who.value}\nPhone or email: ${reach.value}`;
-  send.href = "mailto:mesquitevalley@yahoo.com?subject=" + encodeURIComponent("Custom table design") +
-    "&body=" + encodeURIComponent(body);
+  sumLine.textContent = words;
+  for (const k of Object.keys(state)) {
+    document.getElementById("desc-" + k).textContent = option(k, state[k])[2];
+    form.elements[k].value = nameOf(k, state[k]);
+  }
 }
 
-opts.addEventListener("change", e => { state[e.target.name] = e.target.value; draw(); });
-who.addEventListener("input", draw);
-reach.addEventListener("input", draw);
+choices.addEventListener("change", e => { state[e.target.name] = e.target.value; draw(); });
+form.addEventListener("sent", draw); // put the choices back after the form clears
 draw();
 </script>
 </body>
