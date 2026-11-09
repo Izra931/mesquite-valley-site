@@ -11,7 +11,7 @@
 <meta name="description" content="Design a custom mesquite table. Choose your wood, design, and base, and we'll build it to last for generations.">
 </head>
 <body>
-<header><div class="wrap"><a class="brand" href="index.html">Mesquite Valley Woodcrafts<small>Mesquite and steel, built to last</small></a><nav aria-label="Main"><a href="index.html">Home</a><a href="custom.html" aria-current="page">Custom furniture</a><a href="designs.html">Our designs</a><a href="lumber.html">Buy lumber</a><a href="tel:2543078624">254-307-8624</a></nav></div></header>
+<header><div class="wrap"><a class="brand" href="index.html">Mesquite Valley Woodcrafts<small>Mesquite and steel, built to last</small></a><nav aria-label="Main"><a href="index.html">Home</a><a href="custom.html" aria-current="page">Custom furniture</a><a href="designs.html">Our designs</a><a href="lumber.html">Buy lumber</a><a class="nav-contact" href="contact.html">Contact</a></nav></div></header>
 
 <main>
 <section>
@@ -25,13 +25,13 @@
   <div class="wrap builder">
     <div>
       <div class="choices" id="choices"></div>
-      <a class="btn phone-only" href="#send">Send this design to us</a>
+      <a class="btn phone-only to-send" href="#send">Send this design to us</a>
     </div>
 
     <div class="preview">
       <svg id="art" viewBox="0 0 400 240" role="img" aria-label="Table preview"></svg>
       <dl id="sum" aria-live="polite"></dl>
-      <a class="btn wide-only" href="#send">Send this design to us</a>
+      <a class="btn wide-only to-send" href="#send">Send this design to us</a>
     </div>
   </div>
 </section>
@@ -40,26 +40,40 @@
   <div class="wrap request-wrap">
     <div>
       <h2>Send us your design</h2>
+      <div class="your-table" id="your-table" tabindex="-1" aria-labelledby="your-table-title">
+        <p class="your-table-title" id="your-table-title">Your table</p>
+        <svg id="art-small" viewBox="0 0 400 240" aria-hidden="true"></svg>
+        <p class="your-table-line" id="sum-line"></p>
+        <a class="your-table-change" href="#choices">Change it</a>
+      </div>
       <p>Tell us how to reach you and we'll get back to you to talk about size, finish and price. There's no cost to ask.</p>
-      <p class="your-design">Your table: <b id="sum-line"></b>. <a href="#choices">Change it</a></p>
+      <p>Seen something you love? You can add a picture of it to your request. It helps us understand what you have in mind.</p>
       <p>Rather talk now? Call <a href="tel:2543078624">254-307-8624</a>.</p>
     </div>
     <form class="send-form" id="req" novalidate data-subject="Custom table design">
-      <input type="hidden" name="wood" data-label="Wood">
-      <input type="hidden" name="design" data-label="Design">
-      <input type="hidden" name="base" data-label="Base">
+      <input type="hidden" name="Wood">
+      <input type="hidden" name="Design">
+      <input type="hidden" name="Base">
       <label class="f">Your name
-        <input name="name" autocomplete="name" required>
+        <input name="Name" autocomplete="name" required>
       </label>
       <label class="f">Phone
-        <input name="phone" type="tel" autocomplete="tel">
+        <input name="Phone" type="tel" autocomplete="tel">
       </label>
       <label class="f">Email
-        <input name="email" type="email" autocomplete="email">
+        <input name="Email" type="email" autocomplete="email">
       </label>
       <label class="f">Size, room or anything else we should know
-        <textarea name="details" rows="4" placeholder="Example: about 5 feet long, for a living room with a stone fireplace"></textarea>
+        <textarea name="Notes" rows="4" placeholder="Example: about 5 feet long, for a living room with a stone fireplace"></textarea>
       </label>
+      <div class="upload">
+        <p class="upload-title" id="photos-title">Reference pictures <span class="optional">Optional</span></p>
+        <p class="upload-note" id="photos-note">Have a photo of a table you like, or of the room it will go in? Add up to 5 pictures. You can skip this.</p>
+        <label class="upload-pick btn alt" for="photos">Choose pictures</label>
+        <input class="upload-input" type="file" id="photos" name="photos" data-files="attachment" accept="image/*" multiple aria-labelledby="photos-title" aria-describedby="photos-note">
+        <ul class="upload-list" aria-label="Pictures you've added"></ul>
+        <p class="upload-msg" role="status" aria-live="polite"></p>
+      </div>
       <p class="form-msg" role="status" aria-live="polite"></p>
       <button class="btn" type="submit">Send my design</button>
     </form>
@@ -97,7 +111,7 @@
 </section>
 </main>
 
-<footer><div class="wrap"><p><b>Mesquite Valley Woodcrafts</b></p><p>Call <a href="tel:2543078624">254-307-8624</a> or email <a href="mailto:mesquitevalley@yahoo.com">mesquitevalley@yahoo.com</a></p><p>&copy; 2026 Mesquite Valley Woodcrafts</p></div></footer>
+<footer><div class="wrap"><p><b>Mesquite Valley Woodcrafts</b></p><p>Call <a href="tel:2543078624">254-307-8624</a> or <a href="contact.html">send us a message</a></p><p>&copy; 2026 Mesquite Valley Woodcrafts</p></div></footer>
 
 <script src="forms.js"></script>
 <script>
@@ -181,15 +195,38 @@ function draw() {
   art.setAttribute("aria-label", words);
 
   sum.innerHTML = Object.keys(state).map(k => `<dt>${LABELS[k]}</dt><dd>${nameOf(k, state[k])}</dd>`).join("");
-  sumLine.textContent = words;
+  sumLine.textContent = words.charAt(0).toUpperCase() + words.slice(1) + ".";
+  document.getElementById("art-small").innerHTML = art.innerHTML;
   for (const k of Object.keys(state)) {
     document.getElementById("desc-" + k).textContent = option(k, state[k])[2];
-    form.elements[k].value = nameOf(k, state[k]);
+    form.elements[LABELS[k]].value = nameOf(k, state[k]);
   }
 }
 
 choices.addEventListener("change", e => { state[e.target.name] = e.target.value; draw(); });
-form.addEventListener("sent", draw); // put the choices back after the form clears
+// "Send this design to us": glide down to the form and make "Your table" light up,
+// so it's clear the design is coming along with the message.
+const yourTable = document.getElementById("your-table");
+const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.querySelectorAll(".to-send").forEach(btn => {
+  btn.addEventListener("click", e => {
+    e.preventDefault();
+    yourTable.classList.remove("highlight");
+    yourTable.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "center" });
+    yourTable.focus({ preventScroll: true });
+    // Start the glow once the page has finished moving.
+    const glow = () => { void yourTable.offsetWidth; yourTable.classList.add("highlight"); };
+    if ("onscrollend" in window && !calm) {
+      let done = false;
+      const once = () => { if (!done) { done = true; glow(); } };
+      window.addEventListener("scrollend", once, { once: true });
+      setTimeout(once, 900); // in case the page didn't need to move
+    } else {
+      setTimeout(glow, calm ? 0 : 500);
+    }
+  });
+});
+yourTable.addEventListener("animationend", e => { if (e.animationName === "your-table-glow") yourTable.classList.remove("highlight"); });
 draw();
 </script>
 </body>

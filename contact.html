@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<title>Contact us | Mesquite Valley Woodcrafts</title>
+<meta name="description" content="Send Mesquite Valley Woodcrafts a message about custom furniture, lumber or a showroom visit.">
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="index.html">Mesquite Valley Woodcrafts<small>Mesquite and steel, built to last</small></a><nav aria-label="Main"><a href="index.html">Home</a><a href="custom.html">Custom furniture</a><a href="designs.html">Our designs</a><a href="lumber.html">Buy lumber</a><a class="nav-contact" href="contact.html" aria-current="page">Contact</a></nav></div></header>
+
+<main>
+<section class="dark contact-page">
+  <div class="wrap request-wrap">
+    <div>
+      <h1>Contact us</h1>
+      <p>Have a question about a piece, our lumber, or visiting the showroom? Send us a message and we'll get back to you.</p>
+      <p>Rather talk now? Call <a href="tel:2543078624">254-307-8624</a>.</p>
+      <p>Looking for something specific?</p>
+      <ul class="contact-links">
+        <li><a href="custom.html">Design your own table</a></li>
+        <li><a href="designs.html">Request a piece we've made</a></li>
+        <li><a href="lumber.html#quote">Ask for a lumber quote</a></li>
+      </ul>
+    </div>
+    <form class="send-form" id="req" novalidate data-subject="Message" data-subject-field="Topic">
+      <label class="f">What is it about?
+        <select name="Topic">
+          <option>A general question</option>
+          <option>Custom furniture</option>
+          <option>Lumber</option>
+          <option>Visiting the showroom</option>
+          <option>Something else</option>
+        </select>
+      </label>
+      <label class="f">Your message
+        <textarea name="Message" rows="6"></textarea>
+      </label>
+      <label class="f">Your name
+        <input name="Name" autocomplete="name" required>
+      </label>
+      <label class="f">Phone
+        <input name="Phone" type="tel" autocomplete="tel">
+      </label>
+      <label class="f">Email
+        <input name="Email" type="email" autocomplete="email">
+      </label>
+      <p class="form-msg" role="status" aria-live="polite"></p>
+      <button class="btn" type="submit">Send my message</button>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><p><b>Mesquite Valley Woodcrafts</b></p><p>Call <a href="tel:2543078624">254-307-8624</a> or <a href="contact.html">send us a message</a></p><p>&copy; 2026 Mesquite Valley Woodcrafts</p></div></footer>
+
+<script src="forms.js"></script>
+</body>
+</html>
